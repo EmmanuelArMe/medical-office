@@ -3,7 +3,7 @@ from app.models.paciente import Paciente
 from app.schemas.paciente import PacienteCreate
 
 def crear_paciente(db: Session, paciente: PacienteCreate):
-    db_paciente = Paciente(**paciente.dict())
+    db_paciente = Paciente(**paciente.model_dump())
     db.add(db_paciente)
     db.commit()
     db.refresh(db_paciente)
