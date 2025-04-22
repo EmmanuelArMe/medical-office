@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.db.database import SessionLocal
 from app.schemas.especialidad import EspecialidadCreate, EspecialidadResponse
 from app.services import especialidad as service
+from fastapi.encoders import jsonable_encoder
 
 router = APIRouter()
 
@@ -18,7 +19,9 @@ def get_db():
 @router.post("/especialidades", response_model=EspecialidadResponse, status_code=status.HTTP_201_CREATED)
 def crear_especialidad(especialidad: EspecialidadCreate, db: Session = Depends(get_db)):
     especialidad_creada = service.crear_especialidad(db, especialidad)
-    return especialidad_creada
+    return JSONResponse(
+        content={"message": "Especialidad creada correctamente", "response": jsonable_encoder(crear_especialidad)},
+        status_code=status.HTTP_201_CREATED
 
 @router.get("/especialidades", response_model=list[EspecialidadResponse])
 def listar_especialidades(db: Session = Depends(get_db)):
