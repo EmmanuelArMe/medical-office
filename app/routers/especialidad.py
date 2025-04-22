@@ -20,9 +20,9 @@ def get_db():
 def crear_especialidad(especialidad: EspecialidadCreate, db: Session = Depends(get_db)):
     especialidad_creada = service.crear_especialidad(db, especialidad)
     return JSONResponse(
-        content={"message": "Especialidad creada correctamente", "response": jsonable_encoder(crear_especialidad)},
+        content={"message": "Especialidad creada correctamente", "response": jsonable_encoder(especialidad_creada)},
         status_code=status.HTTP_201_CREATED
-
+    )
 @router.get("/especialidades", response_model=list[EspecialidadResponse])
 def listar_especialidades(db: Session = Depends(get_db)):
     return service.obtener_especialidades(db)
