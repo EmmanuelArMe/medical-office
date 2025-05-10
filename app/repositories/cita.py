@@ -3,7 +3,7 @@ from app.models.cita import Cita
 from app.schemas.cita import CitaCreate
 
 def crear_cita(db: Session, cita_data: CitaCreate) -> Cita:
-    nueva_cita = Cita(**cita_data.dict())
+    nueva_cita = Cita(**cita_data.model_dump())
     db.add(nueva_cita)
     db.commit()
     db.refresh(nueva_cita)
